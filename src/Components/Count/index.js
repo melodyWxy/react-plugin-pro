@@ -8,23 +8,32 @@ import {
 
 class Count extends React.Component {
 
-  componentDidMount() {
-    this.props.Loading.showLoading();
+  state = {
+    text: ''
+  }
 
-    setTimeout(() => {
-      this.props.Loading.closeLoading();
-    }, 1500)
+  componentDidMount() {
+    if (!this.props.isLogin()) {
+      this.setState({
+        text: "没有登陆"
+      })
+    }
   }
 
   render() {
     return (
       <div>
+        <div>{this.state.text}</div>
         Count: {this.props.state.count}
         <button onClick={() => this.props.dispatch({ type: RESTLE_COUNT })}>
           Reset
         </button>
         <button onClick={() => this.props.dispatch({ type: ADD_COUNT })}>+</button>
         <button onClick={() => this.props.dispatch({ type: DELETE_COUNT })}>-</button>
+        <div>
+          <button onClick={this.props.Loading.showLoading}>展示loading</button>
+          <button onClick={this.props.Loading.closeLoading}>关闭loading</button>
+        </div>
       </div>
     )
   }

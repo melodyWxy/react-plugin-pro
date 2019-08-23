@@ -19,7 +19,6 @@ export default (
 
       const utils = this.context.utils;
       this.utils = this.handleUtils(utils);
-      console.log("connetc_this.utils", this.utils);
     }
 
     connectGetState() {

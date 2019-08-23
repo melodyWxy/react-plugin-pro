@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 
+export const isLogin = function() {
+  let accessToken = localStorage.getItem("accessToken");
+  return !!accessToken
+}
+
 export const Loading = {
   install() {
     const { initState, showLoading, closeLoading, render } = this
@@ -34,5 +39,6 @@ export const Loading = {
 
 
 export default {
-  Loading
+  Loading,
+  isLogin
 }

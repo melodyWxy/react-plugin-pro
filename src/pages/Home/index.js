@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-08-23 23:50:33
- * @LastEditors: melodyWxy
- * @LastEditTime: 2019-08-24 00:07:23
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-08-24 02:50:53
  */
 import React from "react";
 import Count from './../../Components/Count';
@@ -15,7 +15,7 @@ export default  class Home extends React.Component{
   render(){
     return (
       <div>
-        home 
+        <Count></Count> 
       </div>
     )
   }

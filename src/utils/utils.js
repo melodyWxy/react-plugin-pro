@@ -1,30 +1,38 @@
-export const loading = {
+import React, { Component } from "react";
+
+export const Loading = {
   install() {
-    const { initState, showLoading, hiddleLoading, render } = this
+    const { initState, showLoading, closeLoading, render } = this
     return {
       initState,
       showLoading,
-      hiddleLoading,
+      closeLoading,
       render
     }
   },
-  initState({ state = {} }) {
+  initState(state) {
     return {
       visible: false
     }
   },
-  showLoading({ setState }) {
-    setState({
+  showLoading() {
+    console.log("showLoading", this)
+    this.setState({
       visible: true
     })
   },
-  hiddleLoading({ setState }) {
-    setState({
+  closeLoading() {
+    this.setState({
       visible: false
     })
   },
-  render({ state = {} }) {
-    const { visible } = state;
+  render() {
+    const { visible } = this.state || {};
     return visible ? <div >loading...</div> : null ;
   }
 };
+
+
+export default {
+  Loading
+}

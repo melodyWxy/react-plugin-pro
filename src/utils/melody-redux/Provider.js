@@ -7,6 +7,7 @@ class Provider extends React.Component {
   }
 
   getChildContext() {
+      console.log(this.props)
     const { store, utils } = this.props;
     return { store, utils };
   }

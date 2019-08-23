@@ -6,45 +6,88 @@ export default (
   mapDispatchToProps,
   mapUtilsToProps
 ) => WrappedComponent => {
-  console.log(mapStateToProps, mapDispatchToProps, mapUtilsToProps);
   class Connect extends Component {
     constructor(props, context) {
       super(props, context);
       this.store = this.context.store;
-      this.utils = this.context.utils;
-      console.log(this.utils)
-      this.handleUtils(this.utils)
+
       this.store.subscribe(() => {
-        this.forceUpdate()
-      })
+        this.forceUpdate();
+      });
+
+      this.state = {};
+      this.renderComponent = [];
+
+      const utils = this.context.utils;
+      this.utils = this.handleUtils(utils);
+      console.log("connetc_this.utils", this.utils);
     }
 
     connectGetState() {
-        const state = this.store.getState()
-        return mapStateToProps(state)
+      const state = this.store.getState();
+      return mapStateToProps(state);
     }
 
     connectDispatch() {
-        const dispatch = this.store.dispatch
-        return mapDispatchToProps(dispatch)
+      const dispatch = this.store.dispatch;
+      return mapDispatchToProps(dispatch);
     }
 
     connectUtils() {
-        return mapUtilsToProps(this.utils)
+      return mapUtilsToProps(this.utils);
     }
 
-    handleUtils(utils) {
-        
-    }
+    handleUtils = (utils = {}) => {
+      let methods = {};
+      console.log(utils);
+      Object.keys(utils).forEach(item => {
+        const plugin = utils[item];
+        if (typeof plugin === "function") {
+          methods[item] = () => plugin.call(this);
+        } else if (typeof plugin === "object") {
+          if (typeof plugin.install !== "function") {
+            throw new Error("插件必须含有install方法");
+          }
+          const install = plugin.install();
+          if (typeof install.initState !== "undefined") {
+            const state = install.initState.call(this.state);
+            this.state = { ...this.state, ...state };
+            delete install.initState;
+          }
+          if (typeof install.render !== "undefined") {
+            const initComponent = install.render.bind(this);
+            this.renderComponent.push(initComponent);
+            delete install.render;
+          }
+          const methods2 = {};
+          Object.keys(install).forEach(item2 => {
+            methods2[item2] = () => install[item2].call(this);
+          });
+          methods[item] = { ...methods2 };
+        }
+      });
+      return methods;
+    };
 
     render() {
-      return <WrappedComponent { ...this.connectUtils() } state={this.connectGetState()} dispatch={this.connectDispatch()} />;
+      return (
+        <React.Fragment>
+          <WrappedComponent
+            {...this.connectUtils()}
+            state={this.connectGetState()}
+            dispatch={this.connectDispatch()}
+          />
+          {this.renderComponent.map((item, index) => (
+            <React.Fragment key={index}>{item()}</React.Fragment>
+          ))}
+        </React.Fragment>
+      );
     }
   }
 
   Connect.contextTypes = {
     store: PropTypes.object,
-    utils: PropTypes.object,
+    utils: PropTypes.object
   };
 
   return Connect;

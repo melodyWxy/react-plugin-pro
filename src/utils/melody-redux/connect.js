@@ -9,6 +9,7 @@ export default (
   class Connect extends Component {
     constructor(props, context) {
       super(props, context);
+      //initStore，初始化store
       this.store = this.context.store;
       this.store.subscribe(() => {
         this.forceUpdate();
@@ -37,7 +38,6 @@ export default (
 
     handlePlugin = (utils = {}) => {
       let methods = {};
-      console.log(utils);
       Object.keys(utils).forEach(item => {
         const plugin = utils[item];
         if (typeof plugin === "function") {

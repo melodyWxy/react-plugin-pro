@@ -5,6 +5,18 @@ export const isLogin = function() {
   return !!accessToken
 }
 
+export const goLogin = function() {
+  if(!isLogin()) {
+    location.href = "/login"
+  }
+}
+
+export const getLocation = function() {
+  return {
+    addrcessCode: "123123"
+  }
+}
+
 export const loading = {
   install() {
     const { initState, showLoading, closeLoading, render } = this

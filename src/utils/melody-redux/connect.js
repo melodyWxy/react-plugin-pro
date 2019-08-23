@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export default (
   mapStateToProps,
   mapDispatchToProps,
-  mapUtilsToProps
+  mapPluginToProps
 ) => WrappedComponent => {
   class Connect extends Component {
     constructor(props, context) {
@@ -17,8 +17,8 @@ export default (
       this.state = {};
       this.renderComponent = [];
 
-      const utils = this.context.utils;
-      this.utils = this.handleUtils(utils);
+      const plugin = this.context.plugin;
+      this.plugin = this.handlePlugin(plugin);
     }
 
     connectGetState() {
@@ -31,11 +31,11 @@ export default (
       return mapDispatchToProps(dispatch);
     }
 
-    connectUtils() {
-      return mapUtilsToProps(this.utils);
+    connectPlugin() {
+      return mapPluginToProps(this.plugin);
     }
 
-    handleUtils = (utils = {}) => {
+    handlePlugin = (utils = {}) => {
       let methods = {};
       console.log(utils);
       Object.keys(utils).forEach(item => {
@@ -71,7 +71,7 @@ export default (
       return (
         <React.Fragment>
           <WrappedComponent
-            {...this.connectUtils()}
+            {...this.connectPlugin()}
             state={this.connectGetState()}
             dispatch={this.connectDispatch()}
           />
@@ -85,7 +85,7 @@ export default (
 
   Connect.contextTypes = {
     store: PropTypes.object,
-    utils: PropTypes.object
+    plugin: PropTypes.object
   };
 
   return Connect;

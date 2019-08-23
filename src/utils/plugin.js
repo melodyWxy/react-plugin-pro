@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 
 export const isLogin = function() {
   let accessToken = localStorage.getItem("accessToken");
   return !!accessToken
 }
 
-export const Loading = {
+export const loading = {
   install() {
     const { initState, showLoading, closeLoading, render } = this
     return {
@@ -15,30 +15,27 @@ export const Loading = {
       render
     }
   },
-  initState(state) {
+  initState(state) {  //如果插件依赖其他插件的state，可以在里面拿到
     return {
       visible: false
     }
   },
   showLoading() {
-    console.log("showLoading", this)
-    this.setState({
-      visible: true
-    })
+    if (!this.state.visible) {
+      this.setState({
+        visible: true
+      })
+    }
   },
   closeLoading() {
-    this.setState({
-      visible: false
-    })
+    if(this.state.visible) {
+      this.setState({
+        visible: false
+      })
+    }
   },
   render() {
     const { visible } = this.state || {};
-    return visible ? <div >loading...</div> : null ;
+    return visible ? <div >loading...</div> : null;
   }
 };
-
-
-export default {
-  Loading,
-  isLogin
-}

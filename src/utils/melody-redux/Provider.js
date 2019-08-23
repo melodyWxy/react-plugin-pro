@@ -1,8 +1,3 @@
-/*
- * @Date: 2019-08-24 01:22:56
- * @LastEditors: melodyWxy
- * @LastEditTime: 2019-08-24 01:27:02
- */
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -12,9 +7,8 @@ class Provider extends React.Component {
   }
 
   getChildContext() {
-      console.log(this.props)
-    const { store, utils } = this.props;
-    return { store, utils };
+    const { store, plugin } = this.props;
+    return { store, plugin };
   }
 
   render() {
@@ -24,7 +18,7 @@ class Provider extends React.Component {
 
 Provider.childContextTypes = {
   store: PropTypes.object,
-  utils: PropTypes.object
+  plugin: PropTypes.object
 };
 
 export default Provider;

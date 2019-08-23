@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-08-24 00:42:05
- * @LastEditors: melodyWxy
- * @LastEditTime: 2019-08-24 01:24:21
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-08-24 03:03:51
  */
 
 import React from 'react';
@@ -9,12 +9,12 @@ import ReactDOM from 'react-dom';
 import Home from './pages/Home';
 // import { Provider } from './utils/Store'
 import store from './utils/Store'
-import utils from './utils/utils'
+import * as plugin from './utils/plugin'
 import { Provider } from './utils/melody-redux'
 
 function App (){
     return (
-        <Provider store={store} utils={utils}>
+        <Provider store={store} plugin={plugin}>
             <Home />
         </Provider>
     )

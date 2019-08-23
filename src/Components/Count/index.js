@@ -29,8 +29,8 @@ class Count extends React.Component {
         <button onClick={() => this.props.dispatch({ type: ADD_COUNT })}>+</button>
         <button onClick={() => this.props.dispatch({ type: DELETE_COUNT })}>-</button>
         <div>
-          <button onClick={this.props.Loading.showLoading}>展示loading</button>
-          <button onClick={this.props.Loading.closeLoading}>关闭loading</button>
+          <button onClick={this.props.loading.showLoading}>展示loading</button>
+          <button onClick={this.props.loading.closeLoading}>关闭loading</button>
         </div>
       </div>
     )

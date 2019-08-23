@@ -1,4 +1,6 @@
-import {reducer,myContext,Provider} from './Provider';
+import { createStore } from 'redux'
+import reducer from './reducer'
 
-export { reducer, myContext, Provider };
+const store = createStore(reducer)
 
+export default store

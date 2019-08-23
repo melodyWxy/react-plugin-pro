@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-08-24 00:42:05
+ * @LastEditors: melodyWxy
+ * @LastEditTime: 2019-08-24 01:27:42
+ */
 import { ADD_COUNT, DELETE_COUNT, RESTLE_COUNT } from "./actionsType";
 
 const inItState = {

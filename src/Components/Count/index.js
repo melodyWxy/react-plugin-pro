@@ -9,15 +9,13 @@ import {
 class Count extends React.Component {
 
   state = {
-    text: ''
+    text: ""
   }
 
   componentDidMount() {
-    if (!this.props.isLogin()) {
-      this.setState({
-        text: "没有登陆"
-      })
-    }
+    this.setState({
+      text: this.props.isLogin() ? "登陆了" : "没有登陆"
+    })
   }
 
   render() {

@@ -10,7 +10,6 @@ export default (
     constructor(props, context) {
       super(props, context);
       this.store = this.context.store;
-
       this.store.subscribe(() => {
         this.forceUpdate();
       });

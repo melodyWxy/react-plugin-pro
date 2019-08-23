@@ -7,7 +7,6 @@ export default (
   mapUtilsToProps
 ) => WrappedComponent => {
   console.log(mapStateToProps, mapDispatchToProps, mapUtilsToProps);
-
   class Connect extends Component {
     constructor(props, context) {
       super(props, context);

@@ -11,6 +11,9 @@ export default (
     constructor(props, context) {
       super(props, context);
       this.store = this.context.store;
+      this.utils = this.context.utils;
+      console.log(this.utils)
+      this.handleUtils(this.utils)
       this.store.subscribe(() => {
         this.forceUpdate()
       })
@@ -26,13 +29,22 @@ export default (
         return mapDispatchToProps(dispatch)
     }
 
+    connectUtils() {
+        return mapUtilsToProps(this.utils)
+    }
+
+    handleUtils(utils) {
+        
+    }
+
     render() {
-      return <WrappedComponent state={this.connectGetState()} dispatch={this.connectDispatch()} />;
+      return <WrappedComponent { ...this.connectUtils() } state={this.connectGetState()} dispatch={this.connectDispatch()} />;
     }
   }
 
   Connect.contextTypes = {
-    store: PropTypes.object
+    store: PropTypes.object,
+    utils: PropTypes.object,
   };
 
   return Connect;

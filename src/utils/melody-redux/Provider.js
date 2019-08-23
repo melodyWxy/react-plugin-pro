@@ -7,7 +7,8 @@ class Provider extends React.Component {
   }
 
   getChildContext() {
-    return { store: this.props.store };
+    const { store, utils } = this.props;
+    return { store, utils };
   }
 
   render() {
@@ -16,7 +17,8 @@ class Provider extends React.Component {
 }
 
 Provider.childContextTypes = {
-  store: PropTypes.object
+  store: PropTypes.object,
+  utils: PropTypes.object
 };
 
 export default Provider;

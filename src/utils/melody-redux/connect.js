@@ -24,16 +24,25 @@ export default (
 
     connectGetState() {
       const state = this.store.getState();
-      return mapStateToProps(state);
+      return this.checkMethod(mapStateToProps, state);
     }
 
     connectDispatch() {
       const dispatch = this.store.dispatch;
-      return mapDispatchToProps(dispatch);
+      return this.checkMethod(mapDispatchToProps, dispatch);
     }
 
     connectPlugin() {
-      return mapPluginToProps(this.plugin);
+      return this.checkMethod(mapPluginToProps, this.plugin);
+    }
+
+    /* 判断有没有方法，如果没有直接返回值 */
+    checkMethod(method, data) {
+      if (method) {
+        return method(data);
+      } else {
+        return data;
+      }
     }
 
     handlePlugin = (utils = {}) => {

@@ -12,9 +12,8 @@ class Count extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.props)
     this.setState({
-      text: this.props.isLogin() ? "登陆了" : "没有登陆"
+      text: this.props.isLogin() ? "有token，登陆了" : "没有token，没有登陆"
     });
   }
 

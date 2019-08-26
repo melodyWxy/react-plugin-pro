@@ -19,7 +19,7 @@ export default (
       this.renderComponent = [];
 
       const plugins = this.context.plugins;
-      // console.log(plugins,1)
+      // 处理plungins
       this.plugins = this.handlePlugin(plugins);
     }
 
@@ -56,7 +56,7 @@ export default (
             method[item]= plugin.bind(this);
             break;
           case 'object': 
-            const obj = {}
+            const obj = {};
             //功能插件的处理
             //因为插件中有一些处理函数不需要暴露到props，所以install方法必须存在
             if(typeof plugin.install!=='function'){

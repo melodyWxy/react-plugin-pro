@@ -1,23 +1,7 @@
+
 import React from "react";
 
-export const isLogin = function() {
-  let accessToken = localStorage.getItem("accessToken");
-  return !!accessToken;
-}
-
-export const goLogin = function() {
-  if(!isLogin()) {
-    location.href = "/login";
-  }
-}
-
-export const getLocation = function() {
-  return {
-    addrcessCode: "123123"
-  }
-}
-
-export const loading = {
+export default  {
   install() {
     const { initState, showLoading, closeLoading, render } = this
     return {
@@ -33,6 +17,7 @@ export const loading = {
     }
   },
   showLoading() {
+      console.log(this,7)
     if (!this.state.visible) {
       this.setState({
         visible: true

@@ -47,33 +47,33 @@ export default (
     }
 
     handlePlugin = (plugins = {}) => {
-      const method =  {};
-      for(const item in plugins){
+      const method = {};
+      for (const item in plugins) {
         const plugin = plugins[item];
-        switch(typeof plugin) {
-          case 'function':
-            //只需处理this指向；
-            method[item]= plugin.bind(this);
-            break;
-          case 'object': 
+        switch (typeof plugin) {
+          case "function":
+          //只需处理this指向；
+          method[item] = plugin.bind(this);
+          break;
+          case "object":
             const obj = {};
             //功能插件的处理
             //因为插件中有一些处理函数不需要暴露到props，所以install方法必须存在
-            if(typeof plugin.install!=='function'){
-                throw new Error("render类插件必须含有install方法");
-            }            
+            if (typeof plugin.install !== "function") {
+              throw new Error("render类插件必须含有install方法");
+            }
             const install = plugin.install();
-            const  initState = install.initState?install.initState():{}
+            const initState = install.initState ? install.initState() : {};
             this.state = {
               ...this.state,
               ...initState
-            } 
+            };
             //处理this
-            for(const index in install){
+            for (const index in install) {
               obj[index] = install[index].bind(this);
-            }  
+            }
             //render类的处理
-            if (install && (typeof install.render !== 'undefined')) {
+            if (install && typeof install.render !== "undefined") {
               const initComponent = install.render.bind(this);
               this.renderComponent.push(initComponent);
               // delete install.render;
@@ -84,6 +84,7 @@ export default (
             method[item] = plugin;
         }
       }
+      console.log(method)
       return method;
     };
 

@@ -1,18 +1,15 @@
+/* 
+ * 函数式插件
+ */
 
-export default {
-    install(){
-        return {
-            isLogin:this.isLogin,
-            goLogin:this.goLogin
-        }
-    },
-    isLogin(){
-        let accessToken = localStorage.getItem("accessToken");
-        return !!accessToken;
-    },
-    goLogin() {
-        if(!isLogin()) {
-            location.href = "/login";
-        }
-    }
-}
+export const isLogin = function() {
+  let accessToken = localStorage.getItem("accessToken");
+  return !!accessToken;
+};
+
+export const goLogin = function() {
+  console.log('goLogin', Object.toString(this.plugins.isLogin) === Object.toString(isLogin));
+  if (!isLogin()) {
+    location.href = "/login";
+  }
+};

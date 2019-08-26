@@ -1,8 +1,8 @@
-
-import loading from './loading';
-import login from './login';
+import loading from "./loading";
+import { isLogin, goLogin } from "./login";
 
 export default {
-    loading,
-    login
-}
+  loading,
+  isLogin,
+  goLogin
+};

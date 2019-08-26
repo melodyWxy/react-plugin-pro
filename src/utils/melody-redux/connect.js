@@ -58,7 +58,7 @@ export default (
           case 'object': 
             const obj = {}
             //功能插件的处理
-            //render插件类 ： 因为插件中有一些处理函数不需要暴露到props，所以install方法必须存在
+            //因为插件中有一些处理函数不需要暴露到props，所以install方法必须存在
             if(typeof plugin.install!=='function'){
                 throw new Error("render类插件必须含有install方法");
             }            
@@ -68,20 +68,15 @@ export default (
               ...this.state,
               ...initState
             } 
-            
+            //处理this
+            for(const index in install){
+              obj[index] = install[index].bind(this);
+            }  
+            //render类的处理
             if (install && (typeof install.render !== 'undefined')) {
-              //处理this
-              for(const index in install){
-                obj[index] = install[index].bind(this);
-              }
               const initComponent = install.render.bind(this);
               this.renderComponent.push(initComponent);
               // delete install.render;
-            }else{
-              //其他类：处理this指向
-              for(const index in plugin){
-                obj[index] = plugin[index].bind(this);
-              }
             }
             method[item] = obj;
             break;

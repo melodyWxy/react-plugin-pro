@@ -58,27 +58,30 @@ export default (
           case 'object': 
             const obj = {}
             //功能插件的处理
-            let install;
-            if(typeof plugin.install==='function'){
-              //如果具备初始化方法:
-              install = plugin.install;
-              this.state = {
-                ...this.state,
-                ...install.initState
-              } 
-            }
-            if (install && (typeof plugin.render !== 'undefined')) {
-              //如果是render类插件（基于组件的插件）
-              if(typeof install!=='function'){
+            //render插件类 ： 因为插件中有一些处理函数不需要暴露到props，所以install方法必须存在
+            if(typeof plugin.install!=='function'){
                 throw new Error("render类插件必须含有install方法");
+            }            
+            const install = plugin.install();
+            const  initState = install.initState?install.initState():{}
+            this.state = {
+              ...this.state,
+              ...initState
+            } 
+            
+            if (install && (typeof install.render !== 'undefined')) {
+              //处理this
+              for(const index in install){
+                obj[index] = install[index].bind(this);
               }
-              const initComponent = plugin.render.bind(this);
+              const initComponent = install.render.bind(this);
               this.renderComponent.push(initComponent);
-              delete install.render;
-            }
-            //处理this指向
-            for(const index in plugin){
-              obj[index] = plugin[index].bind(this);
+              // delete install.render;
+            }else{
+              //其他类：处理this指向
+              for(const index in plugin){
+                obj[index] = plugin[index].bind(this);
+              }
             }
             method[item] = obj;
             break;
